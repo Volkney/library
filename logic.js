@@ -30,18 +30,20 @@ plusBookButton.addEventListener('click', function(event){
     leftBlockPopUp.style.visibility = 'unset';
 });  
 
-document.addEventListener('click', function(event){
-    if (event.target.closest('#left-block') || event.target === plusBookButton) {
-        // If the clicked element is inside the leftBlockPopUp or plusBookButton was clicked, do nothing
-        return;
-    }
-    // If not, hide the leftBlockPopUp
+function hidePopUp(){
     leftBlockPopUp.style.visibility = 'hidden';
     //transition in
     document.getElementById("overlay").style.display = "none";
     leftBlockPopUp.style.transitionTimingFunction = 'ease-out';
     leftBlockPopUp.style.transition = '0.6s';
     leftBlockPopUp.style.transform = 'translateY(180%)';
+}
+document.addEventListener('click', function(event){
+    if (event.target.closest('#left-block') || event.target === plusBookButton) {
+        // If the clicked element is inside the leftBlockPopUp or plusBookButton was clicked, do nothing
+        return;
+    }
+    hidePopUp();
 });
 
 let titleValue = '';
@@ -66,11 +68,6 @@ function updateValue(e) {
 
 
 let myLibrary = [];
-
-function removeBookFromLibrary(index) {
-    myLibrary.splice(index, 1);
-  }
-
 
   function addBookToLibrary() {
     // Get input values
@@ -177,5 +174,7 @@ form.addEventListener('submit', function(event){
 		addBookToLibrary();
 		displayArray();
         clearBookValues();
+        hidePopUp();
         event.preventDefault();
+
 });
