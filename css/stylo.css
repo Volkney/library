@@ -37,6 +37,8 @@
     bottom: 0;
     width: 100%;
     height: 4rem;
+    font-size:x-large;
+    text-align: center;
   }
 
 
@@ -65,7 +67,7 @@
     justify-content: space-around;
     align-items: center;
   }
-  .library-header{
+  #library-header{
     font-size: 2rem;
     font-weight: bold;
     border: 2px double var(--black);
@@ -86,13 +88,24 @@
     margin-bottom: 3rem;
     font-size: large;
   }
-  
-  #add-book:active{
-    transform: translateY(0.1px);
-    transition: 500ms ease;
-    box-shadow:  0px 2px 0.4px rgba(0, 0, 0, 0.24)
+  .remove-button{
+    transform: translateY(-.45em) scale(1.02);
+    position: relative;
+    content: '';
+    border-radius: 5px;
+    border: none;
+    box-shadow:  0px 2px 0.1px var(--antiflash-white);
+    margin-top: 1rem;
+    font-size: small;
+    padding: 6px;
+    width: 5em;
   }
   
+  #add-book:active, .remove-button:active {
+    transform: translateY(0.1px);
+    transition: 500ms ease;
+    box-shadow:  0px 2px 0.4px var(--antiflash-white);
+  }
   #add-book::after{
     content: '';
     position: absolute;
@@ -108,8 +121,23 @@
     0 41.8px 33.4px rgba(0, 0, 0, 0.086),0 100px 80px rgba(0, 0, 0, 0.12);
     transition:  opacity 1s ease;
   }
+    .remove-button::after{
+    content: '';
+    position: absolute;
+    top: 1em;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    opacity: 0;
+    border-radius: 10px;
+    box-shadow:  1px 5px 0.3px var(--antiflash-white), 
+    0 6.7px 5.3px var(--antiflash-white), 
+    0 12.5px 10px var(--antiflash-white),0 22.3px 17.9px var(--antiflash-white),
+    0 41.8px 33.4px var(--antiflash-white),0 100px 80px var(--antiflash-white);
+    transition:  opacity 1s ease;
+  }
   
-  #add-book:hover::after{
+  #add-book:hover::after, .remove-button:hover::after{
     opacity: 1;
   }
   /* main layout */
@@ -121,7 +149,16 @@
   
   .left-column {
     grid-column: 1 / 2;
-   
+    display: flex;
+    margin-top: atuo;
+  }
+
+  ul{
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    gap: 2rem;
+    list-style-type: none;
   }
   
   .center-grid {
@@ -148,6 +185,9 @@
 
   .center-grid > *:not(.pop-up) {
   border: 2px solid black;
+  background-color:var(--black);
+  color: var(--antiflash-white);
+  border-radius: 15px;
   }
    
   .pop-up {
@@ -245,3 +285,4 @@
    input:checked + .slider:before {
     transform: translateX(1.5em);
    }
+   

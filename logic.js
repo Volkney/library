@@ -10,7 +10,8 @@ const bgColor = "hsla(0, 0%, 88%, 1)";
 const whiteColor = "hsla(0, 0%, 99%, 1)";
 const rightBlock = document.getElementById('right-block');
 const overlay = document.getElementById("overlay");
-
+let toggle = document.getElementById("status");
+    
 status.addEventListener("click", function() {
     // Toggle the value of the checkbox between "on" and "off"
     if (this.checked) {
@@ -27,8 +28,9 @@ plusBookButton.addEventListener('click', function(event){
     overlay.style.transitionTimingFunction = 'ease-out';
     overlay.style.transition = '2s';
     //transition out
+    
     leftBlockPopUp.style.transitionTimingFunction = 'ease-in-out';
-    leftBlockPopUp.style.transition = '0.6s';
+    leftBlockPopUp.style.transition = '0.5s';
     leftBlockPopUp.style.transform = 'translateY(0)';
     leftBlockPopUp.style.visibility = 'unset';
 });  
@@ -37,14 +39,10 @@ function hidePopUp(){
     leftBlockPopUp.style.visibility = 'hidden';
     //transition in
     overlay.style.display = "none";
-    overlay.style.transitionTimingFunction = 'ease-out';
-    overlay.style.transition = '2s';
-    
-
-
     leftBlockPopUp.style.transitionTimingFunction = 'ease-out';
-    leftBlockPopUp.style.transition = '0.6s';
+    leftBlockPopUp.style.transition = '0.5s';
     leftBlockPopUp.style.transform = 'translateY(40%)';
+
 }
 document.addEventListener('click', function(event){
     if (event.target.closest('#left-block') || event.target === plusBookButton) {
@@ -52,6 +50,9 @@ document.addEventListener('click', function(event){
         return;
     }
     hidePopUp();
+    toggle.style.transitionTimingFunction = 'ease';
+    toggle.style.transition = '500ms';
+    toggle.style.visibility = 'hidden';
 });
 
 let titleValue = '';
@@ -176,6 +177,8 @@ function displayArray(){
 	    }
     }
   
+    
+
 
 form.addEventListener('submit', function(event){
     
@@ -186,3 +189,64 @@ form.addEventListener('submit', function(event){
         event.preventDefault();
 
 });
+
+//text animation
+
+var ewig = "";
+var holder ="";
+    function permuter(word) {
+        var ind=0;
+        var gate=0;
+        var next = 0;
+        var permuda = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"];
+        word = word.toLowerCase();
+        var polygon = [];
+        for (ind=0; ind<word.length;ind++) {
+            polygon[ind] = word.charCodeAt(ind) - 97;
+        }
+        if (polygon[polygon.length-1]<25) {
+            polygon[polygon.length-1]++;}
+        else {
+            polygon[polygon.length-1]=0;
+            for (ind = polygon.length-2; ind>-1; ind--){
+                if(polygon[ind]<25) {polygon[ind]++; gate++; break;}
+                else {polygon[ind]=0;}
+            }
+            if (gate==0) {polygon.unshift(0);}
+        }
+        holder = permuda[polygon[0]].toUpperCase();
+        for     (ind = 1; ind < polygon.length; ind++) {
+            holder= holder + permuda[polygon[ind]];
+        }
+        return holder;
+    }
+function permute(eyedee) {
+        var word1=document.getElementById(eyedee).innerHTML;
+        ewig = setInterval(function() {document.getElementById(eyedee).innerHTML = permuter(word1); word1=holder;}, 1);}
+function unpermute(term,eyedee) {
+        clearInterval(ewig);
+        document.getElementById(eyedee).innerHTML = term;}
+function hexperm(eyedee) {
+    
+        var word1= "Babel";
+        
+        ewig = setInterval(function() {document.getElementById(eyedee).innerHTML = "The Library of " + permuter(word1); word1=holder;}, 1);}
+        
+
+function unpermute(term, eyedee) {
+  clearInterval(ewig);
+  document.getElementById(eyedee).innerHTML = term;
+}
+
+let originalText1 = document.getElementById('change1').innerHTML;
+let originalText2 = document.getElementById('change2').innerHTML;
+let originalText3 = document.getElementById('library-header').innerHTML;
+
+
+document.getElementById('change1').addEventListener("mouseenter", function() {permute('change1') });
+document.getElementById('change2').addEventListener("mouseenter", function() {permute('change2') });
+document.getElementById('library-header').addEventListener("mouseenter", function() {hexperm('library-header') });
+
+document.getElementById('change1').addEventListener("mouseleave", function() {unpermute(originalText1 ,'change1') });
+document.getElementById('change2').addEventListener("mouseleave", function() {unpermute(originalText2,'change2') });
+document.getElementById('library-header').addEventListener("mouseleave", function() {unpermute(originalText3,'library-header') });
