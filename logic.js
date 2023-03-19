@@ -9,7 +9,7 @@ const leftBlockPopUp = document.getElementById('left-block');
 const bgColor = "hsla(0, 0%, 88%, 1)";
 const whiteColor = "hsla(0, 0%, 99%, 1)";
 const rightBlock = document.getElementById('right-block');
-
+const overlay = document.getElementById("overlay");
 
 status.addEventListener("click", function() {
     // Toggle the value of the checkbox between "on" and "off"
@@ -22,9 +22,12 @@ status.addEventListener("click", function() {
 
 plusBookButton.addEventListener('click', function(event){
     event.stopPropagation();
-    document.getElementById("overlay").style.display = "block";
+    overlay.style.display = "block";
+    
+    overlay.style.transitionTimingFunction = 'ease-out';
+    overlay.style.transition = '2s';
     //transition out
-    leftBlockPopUp.style.transitionTimingFunction = 'ease-in';
+    leftBlockPopUp.style.transitionTimingFunction = 'ease-in-out';
     leftBlockPopUp.style.transition = '0.6s';
     leftBlockPopUp.style.transform = 'translateY(0)';
     leftBlockPopUp.style.visibility = 'unset';
@@ -33,10 +36,15 @@ plusBookButton.addEventListener('click', function(event){
 function hidePopUp(){
     leftBlockPopUp.style.visibility = 'hidden';
     //transition in
-    document.getElementById("overlay").style.display = "none";
+    overlay.style.display = "none";
+    overlay.style.transitionTimingFunction = 'ease-out';
+    overlay.style.transition = '2s';
+    
+
+
     leftBlockPopUp.style.transitionTimingFunction = 'ease-out';
     leftBlockPopUp.style.transition = '0.6s';
-    leftBlockPopUp.style.transform = 'translateY(180%)';
+    leftBlockPopUp.style.transform = 'translateY(40%)';
 }
 document.addEventListener('click', function(event){
     if (event.target.closest('#left-block') || event.target === plusBookButton) {
